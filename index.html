@@ -188,14 +188,14 @@ footer p { margin: 0; max-width: 72ch; }
   <div class="relative z-10 flex h-full flex-col">
     <div class="px-6 md:px-12 lg:px-16 pt-6">
       <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
-        <a href="#top" class="text-2xl font-semibold tracking-tight text-white no-underline">每日選股</a>
+        <a href="#top" class="text-2xl font-semibold tracking-tight text-white no-underline whitespace-nowrap">每日選股</a>
         <div class="hidden md:flex items-center gap-8 text-sm">
           <a href="#picks" class="text-white no-underline transition-colors hover:text-gray-300">今日推薦</a>
           <a href="#picks" data-go="上市" class="text-white no-underline transition-colors hover:text-gray-300">上市 20 檔</a>
           <a href="#picks" data-go="上櫃" class="text-white no-underline transition-colors hover:text-gray-300">上櫃 20 檔</a>
           <a href="#about" class="text-white no-underline transition-colors hover:text-gray-300">說明</a>
         </div>
-        <a href="#picks" class="bg-white text-black no-underline px-6 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">看今日推薦</a>
+        <a href="#picks" class="bg-white text-black no-underline px-6 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors hover:bg-gray-100">看今日推薦</a>
       </nav>
     </div>
 
@@ -490,7 +490,8 @@ render();
 (function animateHero() {
   const TEXT = "看懂大戶籌碼\n上市櫃各選 20 檔。", CHAR_DELAY = 30, START_DELAY = 200;
   const h1 = $("heading");
-  h1.innerHTML = TEXT.split("\n").map((line, li) => [...line].map((ch, ci) =>
+  // 連續數字(例如 20)當成一個單位,避免被拆到兩行
+  h1.innerHTML = TEXT.split("\n").map((line, li) => line.match(/\d+|./gu).map((ch, ci) =>
     `<span class="char" aria-hidden="true" style="transition-delay:${li * line.length * CHAR_DELAY + ci * CHAR_DELAY}ms">${ch === " " ? " " : ch}</span>`
   ).join("")).join("<br>");
   setTimeout(() => h1.querySelectorAll(".char").forEach((c) => c.classList.add("on")), START_DELAY);
